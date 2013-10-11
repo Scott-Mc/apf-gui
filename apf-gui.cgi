@@ -126,6 +126,7 @@ if ($FORM{'action'} eq "saveconfig") {
 }
 elsif ($FORM{'action'} eq "displayconfig") {
 	print displayfile($FORM{'filename'});
+	print "<p><strong>The firewall will be automatically reloaded once you click \"Save Changes\".  Ensure your changes are correct otherwise you may end up with an inaccessible system.</strong></p>";
 	displayfooter();
 }
 else {
