@@ -38,4 +38,4 @@ You may report issues and contribute to the project at on github at https://gith
 
 #### Todo
  - Add debian/ubuntu support
- - Make GUI more friendly
+ 
