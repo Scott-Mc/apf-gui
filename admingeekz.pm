@@ -42,6 +42,8 @@ sub checkip {
 
 sub savefile {
 	my ($file, $contents) = @_;
+        #Strip CRLF
+        $contents =~ s/\r\n/\n/g;
 	if (open my $file_fh, '>', $file) {
 		print $file_fh $contents;
 		close $file_fh;
