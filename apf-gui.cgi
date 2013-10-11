@@ -82,6 +82,9 @@ textarea {
         -moz-border-radius:.8em;
 	width: 60%;
 }
+input {
+        border: 2px solid #e7e2d7;
+}
 a:link {color:#204C69;}
 a:visited {color:#204C69;}
 a:hover {color:#0066FF; }
@@ -129,10 +132,50 @@ elsif ($FORM{'action'} eq "displayconfig") {
 	print "<p><strong>The firewall will be automatically reloaded once you click \"Save Changes\".  Ensure your changes are correct otherwise you may end up with an inaccessible system.</strong></p>";
 	displayfooter();
 }
+elsif ($FORM{'action'} eq "allowip") {
+        if (checkip($FORM{'iptoallow'})) {
+                allow_ip($FORM{'iptoallow'});
+        }
+        else {
+                print "<p><strong>This is not a valid IP or CIDR.</strong></p>";
+        }
+        displayfooter();
+}
+
+elsif ($FORM{'action'} eq "blockip") {
+	if (checkip($FORM{'iptoblock'})) {
+		block_ip($FORM{'iptoblock'});
+	}
+	else {
+		print "<p><strong>This is not a valid IP or CIDR.</strong></p>";
+	}
+	displayfooter();
+}
 else {
-	print "<a href='apf-gui.cgi?action=displayconfig&filename=/etc/apf/allow_hosts.rules'>View allowed hosts</a><br />
-<a href='apf-gui.cgi?action=displayconfig&filename=/etc/apf/deny_hosts.rules'>View blocked hosts</a><br />
-<a href='apf-gui.cgi?action=displayconfig&filename=/etc/apf/conf.apf'>View APF config</a>";
+	print <<EOF;
+<p>You can control your APF firewall using the links below.<p>
+<p><strong>Quick Actions</strong></p>
+<p>Allow IP <br/>
+<form action="apf-gui.cgi?action=allowip" method="post" name="allowip">
+<input type="input" name="iptoallow" value="">
+<input type="Submit" name="submit" value="Allow IP">
+</form>
+</p>
+
+<p>Block IP <br/>
+<form action="apf-gui.cgi?action=blockip" method="post" name="blockip">
+<input type="input" name="iptoblock" value="">
+<input type="Submit" name="submit" value="Block IP">
+</form>
+</p>
+
+
+<p>You can edit the configuration files directly with the links below<br />
+<a href="apf-gui.cgi?action=displayconfig&filename=/etc/apf/allow_hosts.rules">Edit allowed hosts</a><br />
+<a href="apf-gui.cgi?action=displayconfig&filename=/etc/apf/deny_hosts.rules">Edit blocked hosts</a><br />
+<a href="apf-gui.cgi?action=displayconfig&filename=/etc/apf/conf.apf">Edit APF config</a>
+</p>
+EOF
 }
 
 sub displayfooter {
@@ -144,3 +187,4 @@ print <<EOF;
 </body>
 </html>
 EOF
+

@@ -68,6 +68,19 @@ $config
 EOM
 }
 
+sub allow_ip {
+	my ($ip) = @_;
+	print "<pre><strong>";
+	system "/usr/local/sbin/apf", "-a", $ip;
+	print "</strong></pre>";
+}
+sub block_ip {
+        my ($ip) = @_;
+        print "<pre><strong>";
+        system "/usr/local/sbin/apf", "-d", $ip;
+        print "</strong></pre>";
+}
+
 sub restart_daemon {
 	my ($daemon) = @_;
         print "Restarting $daemon";
@@ -88,4 +101,3 @@ sub reload_daemon {
 
 
 1;
-
