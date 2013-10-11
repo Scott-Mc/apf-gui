@@ -46,6 +46,58 @@ if (!Whostmgr::ACLS::hasroot()) {
 
 print "Content-type: text/html\r\n\r\n";
 
+print <<EOF;
+<html>
+<head>
+<style>
+body {
+	background:#E9F6F7;
+	font-size:90%;
+	color:#204C69;
+	margin:20px auto;
+	text-align:center;
+	font-family:"Myriad Pro", Myriad, Helvetica, Arial, sans-serif;
+	line-height:1.4em;
+}
+header {
+	display:block;
+	position:relative;
+	text-align:center;
+	padding:10px 20px 20px;
+	margin:10px;
+	border:1px solid #e7e2d7;
+	border-radius:8px;
+	-webkit-border-radius:.8em;
+	-moz-border-radius:.8em;
+	font-family:Helvetica, Arial, sans-serif;
+	font-size:2.0em;
+	letter-spacing:-0.06em;
+	font-weight:normal;
+	text-shadow: 0 1px 0 #403232;
+}
+textarea {
+	border: 2px solid #e7e2d7;
+        border-radius:8px;
+        -webkit-border-radius:.8em;
+        -moz-border-radius:.8em;
+	width: 60%;
+}
+a:link {color:#204C69;}
+a:visited {color:#204C69;}
+a:hover {color:#0066FF; }
+a:active {color:#204C69;}
+</style>
+<title>APF Firewall WHM Interface by AdminGeekZ.com</title>
+</head>
+<body>
+<header>
+<div>
+APF Firewall Interface for WHM
+</div>
+</header>
+<div>
+EOF
+
 exit_error("Unable to find working APF install") if !check_file("/etc/apf/apf","y");
 
 foreach(@allowedfiles) {
@@ -85,3 +137,9 @@ else {
 sub displayfooter {
 	print "<a href=\"apf-gui.cgi\">Return to menu</a>";
 }
+
+print <<EOF;
+</div>
+</body>
+</html>
+EOF
